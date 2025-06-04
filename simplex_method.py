@@ -43,14 +43,15 @@ class Dictionary:
             
     def pivot(self, i_pivot: int, j_pivot: int):
         # ピボット演算を行う
+        i_pivot_column = self.tableau[i_pivot].copy()
         for i in range(len(self.tableau)):
             if i == i_pivot:
-                factor = -1 / self.tableau[i][j_pivot]
+                factor = -1 /self.tableau[i_pivot][j_pivot]
                 self.tableau[i] = [ factor * x for x in self.tableau[i] ]
                 self.tableau[i][j_pivot] = -factor
             else: 
-                factor = self.tableau[i][j_pivot] / self.tableau[i_pivot][j_pivot]
-                self.tableau[i] = [ self.tableau[i][j] - factor * self.tableau[i_pivot][j] for j in range(len(self.tableau[i])) ]
+                factor = self.tableau[i][j_pivot] / i_pivot_column[j_pivot]
+                self.tableau[i] = [ self.tableau[i][j] - factor * i_pivot_column[j] for j in range(len(self.tableau[i])) ]
                 self.tableau[i][j_pivot] = factor
                 
         # 基底変数と非基底変数の更新
@@ -80,10 +81,10 @@ if __name__ == "__main__":
     
     # シンプレックス表
     tableau = [
-        [0, -1, 4, -7],  # z
-        [2, 1, -4, 0],   # x_4
-        [3, 0, 1, -2],   # x_5
-        [5, -1, 4, -1]   # x_6
+        [0, -1, 2, -1],  # z
+        [6, -2, 2, 0],   # x_4
+        [3, -1, -1, 2],   # x_5
+        [3, -1, -1, -1]   # x_6
     ]
     
     dictionary = Dictionary(basis, unbasis, tableau)
