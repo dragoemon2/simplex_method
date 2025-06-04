@@ -48,7 +48,7 @@ class Dictionary:
         i_pivot_column = self.tableau[i_pivot].copy()
         for i in range(len(self.tableau)):
             if i == i_pivot:
-                factor = -1 /self.tableau[i_pivot][j_pivot]
+                factor = -1 / self.tableau[i_pivot][j_pivot]
                 self.tableau[i] = [ factor * x for x in self.tableau[i] ]
                 self.tableau[i][j_pivot] = -factor
             else: 
