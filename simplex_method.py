@@ -70,7 +70,7 @@ class Dictionary:
         result += "     z & " + " & ".join([str(x) for x in self.tableau[0]]) + " \\\\\n"
         result += "    \hline\n"
         for i, b in enumerate(self.basis):
-            result += f"\t x_{b} & " + " & ".join([str(x) for x in self.tableau[i + 1]]) + " \\\\\n"
+            result += f"    x_{b} & " + " & ".join([str(x) for x in self.tableau[i + 1]]) + " \\\\\n"
         result += r"\end{array}"
         
         return result
