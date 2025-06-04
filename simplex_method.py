@@ -20,7 +20,7 @@ class Dictionary:
             if print_progress:
                 print(self.latex(), end=" \\\\\n")
             
-            unbasis_cand = [(unbasis[j-1], j) for j in range(1, len(self.tableau[0])) if self.tableau[0][j] < 0]
+            unbasis_cand = [(self.unbasis[j-1], j) for j in range(1, len(self.tableau[0])) if self.tableau[0][j] < 0]
             if len(unbasis_cand) == 0:
                 return self.tableau[0][0], self.basis, self.unbasis, self.tableau
             else:
@@ -34,9 +34,9 @@ class Dictionary:
                     ratio = -self.tableau[i][0] / self.tableau[i][j_pivot]
                     if ratio < min_ratio:
                         min_ratio = ratio
-                        basis_cand = [(basis[i-1], i)]
+                        basis_cand = [(self.basis[i-1], i)]
                     elif ratio == min_ratio:
-                        basis_cand.append((basis[i-1], i))
+                        basis_cand.append((self.basis[i-1], i))
             if len(basis_cand) == 0:
                 raise ValueError("Unbounded solution")
             _, i_pivot = min(basis_cand) # 候補のうち添字が最小の基底を選択
@@ -78,17 +78,17 @@ class Dictionary:
     
 if __name__ == "__main__":
     # 基底変数と非基底変数のインデックス
-    basis = [6, 5, 4]
+    basis = [4, 5, 6]
     unbasis = [1, 2, 3]
-    
+
     # シンプレックス表
     tableau = [
-        [0, -1, 2, -1],  # z
-        [6, -2, 2, 0],   # x_4
-        [3, -1, -1, 2],   # x_5
-        [3, -1, -1, -1]   # x_6
+        [0, -1, 4, -7],  # z
+        [2, 1, -4, 0],   # x_4
+        [3, 0, 1, -2],   # x_5
+        [5, -1, 4, -1]   # x_6
     ]
-    
+
     dictionary = Dictionary(basis, unbasis, tableau)
     dictionary.simplex_method(print_progress=True)
         
