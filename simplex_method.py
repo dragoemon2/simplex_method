@@ -20,24 +20,26 @@ class Dictionary:
             if print_progress:
                 print(self.latex(), end=" \\\\\n")
             
-            for j_pivot in range(1, len(self.tableau[0])):
-                if self.tableau[0][j_pivot] < 0:
-                    break
-            else:
-                # 最適解が見つかった場合
+            unbasis_cand = [(unbasis[j-1], j) for j in range(1, len(self.tableau[0])) if self.tableau[0][j] < 0]
+            if len(unbasis_cand) == 0:
                 return self.tableau[0][0], self.basis, self.unbasis, self.tableau
+            else:
+                _, j_pivot = min(unbasis_cand) # 候補のうち添字が最小の非基底を選択
 
             # ピボット列の選択
-            i_pivot = 0
             min_ratio = Infinity
+            basis_cand = []
             for i in range(1, len(self.tableau)):
                 if self.tableau[i][j_pivot] < 0:
                     ratio = -self.tableau[i][0] / self.tableau[i][j_pivot]
                     if ratio < min_ratio:
                         min_ratio = ratio
-                        i_pivot = i
-            if i_pivot == 0:
+                        basis_cand = [(basis[i-1], i)]
+                    elif ratio == min_ratio:
+                        basis_cand.append((basis[i-1], i))
+            if len(basis_cand) == 0:
                 raise ValueError("Unbounded solution")
+            _, i_pivot = min(basis_cand) # 候補のうち添字が最小の基底を選択
             
             self.pivot(i_pivot, j_pivot)
             
@@ -76,7 +78,7 @@ class Dictionary:
     
 if __name__ == "__main__":
     # 基底変数と非基底変数のインデックス
-    basis = [4, 5, 6]
+    basis = [6, 5, 4]
     unbasis = [1, 2, 3]
     
     # シンプレックス表
