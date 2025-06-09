@@ -48,9 +48,9 @@ class Dictionary:
         i_pivot_column = self.tableau[i_pivot].copy()
         for i in range(len(self.tableau)):
             if i == i_pivot:
-                factor = -1 / self.tableau[i_pivot][j_pivot]
-                self.tableau[i] = [ factor * x for x in self.tableau[i] ]
-                self.tableau[i][j_pivot] = -factor
+                factor = 1 / self.tableau[i_pivot][j_pivot]
+                self.tableau[i] = [ - factor * x for x in self.tableau[i] ]
+                self.tableau[i][j_pivot] = factor
             else: 
                 factor = self.tableau[i][j_pivot] / i_pivot_column[j_pivot]
                 self.tableau[i] = [ self.tableau[i][j] - factor * i_pivot_column[j] for j in range(len(self.tableau[i])) ]
@@ -78,15 +78,15 @@ class Dictionary:
     
 if __name__ == "__main__":
     # 基底変数と非基底変数のインデックス
-    basis = [4, 5, 6]
+    basis = [5, 4, 6]
     unbasis = [1, 2, 3]
 
     # シンプレックス表
     tableau = [
-        [0, -1, 4, -7],  # z
-        [2, 1, -4, 0],   # x_4
-        [3, 0, 1, -2],   # x_5
-        [5, -1, 4, -1]   # x_6
+        [0, -1, 2, -1],  # z
+        [6, -2, 2, 0],   # x_4
+        [3, -1,-1, 2],   # x_5
+        [3, -1,-1,-1]   # x_6
     ]
 
     dictionary = Dictionary(basis, unbasis, tableau)
